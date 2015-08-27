@@ -18,8 +18,7 @@
 
 			<field>
 				<name>room</name>
-				<type>text</type>
-				<notnull>false</notnull>
+				<type>string</type>
 				<length>64</length>
 			</field>
 
@@ -48,7 +47,183 @@
 				<type>clob</type>
 				<notnull>false</notnull>
 			</field>
+		</declaration>
+	</table>
+	<table>
+		<name>*dbprefix*conv_messages</name>
+		<declaration>
+			<field>
+				<name>id</name>
+				<type>integer</type>
+				<default>0</default>
+				<notnull>true</notnull>
+				<autoincrement>1</autoincrement>
+				<length>4</length>
+			</field>
 
+			<field>
+				<name>room_id</name>
+				<type>string</type>
+				<length>4</length>
+			</field>
+
+			<field>
+				<name>author</name>
+				<type>text</type>
+				<notnull>true</notnull>
+				<length>64</length>
+			</field>
+
+			<field>
+				<name>date</name>
+				<type>timestamp</type>
+				<default>1970-01-01 00:00:00</default>
+				<notnull>true</notnull>
+			</field>
+
+			<field>
+				<name>text</name>
+				<type>clob</type>
+				<notnull>false</notnull>
+			</field>
+
+			<index>
+				<name>conv_message_room</name>
+				<field>
+					<name>room_id</name>
+					<sorting>ascending</sorting>
+				</field>
+			</index>
+		</declaration>
+	</table>
+	<table>
+		<name>*dbprefix*conv_rooms</name>
+		<declaration>
+			<field>
+				<name>id</name>
+				<type>integer</type>
+				<default>0</default>
+				<notnull>true</notnull>
+				<autoincrement>1</autoincrement>
+				<length>4</length>
+			</field>
+
+			<field>
+				<name>last_message_id</name>
+				<type>integer</type>
+				<length>4</length>
+			</field>
+
+			<index>
+				<name>conv_room_last</name>
+				<field>
+					<name>last_message_id</name>
+					<sorting>ascending</sorting>
+				</field>
+			</index>
+		</declaration>
+	</table>
+	<table>
+		<name>*dbprefix*conv_participants</name>
+		<declaration>
+			<field>
+				<name>id</name>
+				<type>integer</type>
+				<default>0</default>
+				<notnull>true</notnull>
+				<autoincrement>1</autoincrement>
+				<length>4</length>
+			</field>
+
+			<field>
+				<name>room_id</name>
+				<type>integer</type>
+				<length>4</length>
+			</field>
+
+			<field>
+				<name>type</name>
+				<type>integer</type>
+				<length>4</length>
+			</field>
+
+			<field>
+				<name>user</name>
+				<type>text</type>
+				<length>64</length>
+			</field>
+
+			<field>
+				<name>last_seen_id</name>
+				<type>integer</type>
+				<length>4</length>
+			</field>
+
+			<index>
+				<name>conv_part_room</name>
+				<field>
+					<name>room_id</name>
+					<sorting>ascending</sorting>
+				</field>
+			</index>
+			<index>
+				<name>conv_part_user</name>
+				<field>
+					<name>user</name>
+					<sorting>ascending</sorting>
+				</field>
+			</index>
+			<index>
+				<unique>true</unique>
+				<name>conv_part_user_room</name>
+				<field>
+					<name>user</name>
+					<sorting>ascending</sorting>
+				</field>
+				<field>
+					<name>room_id</name>
+					<sorting>ascending</sorting>
+				</field>
+			</index>
+		</declaration>
+	</table>
+	<table>
+		<name>*dbprefix*conv_attachments</name>
+		<declaration>
+			<field>
+				<name>id</name>
+				<type>integer</type>
+				<default>0</default>
+				<notnull>true</notnull>
+				<autoincrement>1</autoincrement>
+				<length>4</length>
+			</field>
+
+			<field>
+				<name>message_id</name>
+				<type>integer</type>
+				<notnull>4</notnull>
+			</field>
+
+			<field>
+				<name>type</name>
+				<type>integer</type>
+				<length>4</length>
+			</field>
+
+			<field>
+				<name>source</name>
+				<type>text</type>
+				<length>64</length>
+			</field>
+
+			<index>
+				<name>conv_attachment_message</name>
+				<field>
+					<name>message_id</name>
+					<sorting>ascending</sorting>
+				</field>
+			</index>
 		</declaration>
 	</table>
 </database>
